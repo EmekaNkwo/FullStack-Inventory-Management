@@ -11,7 +11,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Box, LinearProgress } from "@mui/material";
+import { Box, LinearProgress, Pagination } from "@mui/material";
+import { useState } from "react";
+import { usePagination } from "@/shared/hooks/usePagination";
 
 const columns: GridColDef[] = [
   {
@@ -31,6 +33,12 @@ const columns: GridColDef[] = [
 const Users = () => {
   const { data: users, isError, isLoading } = useGetUsersQuery();
 
+  const {
+    page,
+    paginatedData: paginatedUsers,
+    totalPages,
+    handlePageChange,
+  } = usePagination(users);
   return (
     <div className="flex flex-col w-full">
       <Header name="Users" />
@@ -55,7 +63,7 @@ const Users = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {users?.map((row) => (
+                  {paginatedUsers?.map((row) => (
                     <TableRow
                       key={row.userId}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -71,6 +79,21 @@ const Users = () => {
               </Table>
             </TableContainer>
           )}
+          {isLoading
+            ? null
+            : users && (
+                <div className="flex justify-center items-center my-[2rem]">
+                  <Pagination
+                    count={totalPages}
+                    page={page}
+                    onChange={handlePageChange}
+                    color="primary"
+                    size="large"
+                    showFirstButton
+                    showLastButton
+                  />
+                </div>
+              )}
         </>
       )}
     </div>

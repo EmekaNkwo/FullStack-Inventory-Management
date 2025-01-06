@@ -10,7 +10,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { GridColDef } from "@mui/x-data-grid";
-import { Box, LinearProgress } from "@mui/material";
+import { Box, LinearProgress, Pagination } from "@mui/material";
+import { usePagination } from "@/shared/hooks/usePagination";
 
 const columns: GridColDef[] = [
   { field: "productId", headerName: "ID" },
@@ -39,6 +40,12 @@ const columns: GridColDef[] = [
 const Inventory = () => {
   const { data: products, isError, isLoading } = useGetProductsQuery();
 
+  const {
+    page,
+    paginatedData: paginatedProducts,
+    totalPages,
+    handlePageChange,
+  } = usePagination(products);
   return (
     <div className="flex flex-col">
       <Header name="Inventory" />
@@ -63,7 +70,7 @@ const Inventory = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {products?.map((row) => (
+                  {paginatedProducts?.map((row) => (
                     <TableRow
                       key={row.productId}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -80,6 +87,19 @@ const Inventory = () => {
                 </TableBody>
               </Table>
             </TableContainer>
+          )}
+          {!isLoading && products && (
+            <div className="flex justify-center items-center my-[2rem]">
+              <Pagination
+                count={totalPages}
+                page={page}
+                onChange={handlePageChange}
+                color="primary"
+                size="large"
+                showFirstButton
+                showLastButton
+              />
+            </div>
           )}
         </>
       )}
