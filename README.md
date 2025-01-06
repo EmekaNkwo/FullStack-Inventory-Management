@@ -2,6 +2,10 @@
 
 This is a fullstack inventory management dashboard built with Next.js, Tailwind, Redux Toolkit Query, Material UI Data Grid, Node.js, Prisma, PostgreSQL, and TypeScript.
 
+## Live Demo
+
+https://full-stack-inventory-management.vercel.app/dashboard
+
 ## Tech Stack
 
 - **Next JS**
