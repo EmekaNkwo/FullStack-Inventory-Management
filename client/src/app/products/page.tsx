@@ -8,6 +8,7 @@ import Rating from "@/app/(components)/Rating";
 import CreateProductModal from "./CreateProductModal";
 import Image from "next/image";
 import { Pagination, Skeleton } from "@mui/material";
+import { usePagination } from "@/shared/hooks/usePagination";
 
 type ProductFormData = {
   name: string;
@@ -26,21 +27,12 @@ const Products = () => {
     isError,
   } = useGetProductsQuery(searchTerm);
 
-  const [page, setPage] = useState(1);
-  const itemsPerPage = 12;
-
-  // Paginate products
-  const paginatedProducts = products
-    ? products.slice((page - 1) * itemsPerPage, page * itemsPerPage)
-    : [];
-
-  const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
-    value: number
-  ) => {
-    setPage(value);
-  };
-
+  const {
+    page,
+    paginatedData: paginatedProducts,
+    totalPages,
+    handlePageChange,
+  } = usePagination(products);
   const [createProduct] = useCreateProductMutation();
   const handleCreateProduct = async (productData: ProductFormData) => {
     await createProduct(productData);
@@ -134,7 +126,7 @@ const Products = () => {
         : products && (
             <div className="flex justify-center items-center my-[2rem]">
               <Pagination
-                count={Math.ceil(products.length / itemsPerPage)}
+                count={totalPages}
                 page={page}
                 onChange={handlePageChange}
                 color="primary"

@@ -64,8 +64,8 @@ const Inventory = () => {
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    {columns.map((item) => (
-                      <TableCell>{item.headerName}</TableCell>
+                    {columns.map((item, index) => (
+                      <TableCell key={index}>{item.headerName}</TableCell>
                     ))}
                   </TableRow>
                 </TableHead>
