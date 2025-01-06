@@ -14,6 +14,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import { Box, LinearProgress } from "@mui/material";
 
 type AggregatedDataItem = {
   name: string;
@@ -77,7 +78,11 @@ const Expenses = () => {
   };
 
   if (isLoading) {
-    return <div className="py-4">Loading...</div>;
+    return (
+      <Box sx={{ width: "100%" }} mt={5}>
+        <LinearProgress />
+      </Box>
+    );
   }
 
   if (isError) {
