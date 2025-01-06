@@ -46,7 +46,7 @@ const Products = () => {
     await createProduct(productData);
   };
 
-  if (isError || !products) {
+  if (isError) {
     return (
       <div className="text-center text-red-500 py-4">
         Failed to fetch products

@@ -80,7 +80,7 @@ const Expenses = () => {
     return <div className="py-4">Loading...</div>;
   }
 
-  if (isError || !expensesData) {
+  if (isError) {
     return (
       <div className="text-center text-red-500 py-4">
         Failed to fetch expenses

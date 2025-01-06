@@ -36,7 +36,7 @@ const columns: GridColDef[] = [
 const Inventory = () => {
   const { data: products, isError, isLoading } = useGetProductsQuery();
 
-  if (isError || !products) {
+  if (isError) {
     return (
       <div className="text-center text-red-500 py-4">
         Failed to fetch products
